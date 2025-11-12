@@ -73,4 +73,20 @@ export const routes: Routes = [
       ).then((c) => c.SupplierDashboardComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'settings/supplier/create',
+    loadComponent: () =>
+      import(
+        './components/settings/supplier/supplier-create-update/supplier-create-update.component'
+      ).then((m) => m.SupplierCreateUpdateComponent),
+    canActivate: [authGuard],
+  },
+    {
+    path: 'settings/supplier/update/:id',
+    loadComponent: () =>
+      import(
+        './components/settings/supplier/supplier-create-update/supplier-create-update.component'
+      ).then((m) => m.SupplierCreateUpdateComponent),
+    canActivate: [authGuard],
+  },
 ];

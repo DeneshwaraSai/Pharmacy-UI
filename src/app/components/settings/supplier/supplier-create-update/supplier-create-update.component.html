@@ -1,0 +1,167 @@
+<mat-card class="p-4">
+  @if (supplierForm) {
+
+  <form [formGroup]="supplierForm">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Name </mat-label>
+            <input
+              matInput
+              type="text"
+              [readonly]="supplierForm.get('id')?.value"
+              formControlName="name"
+              placeholder="Enter supplier name ... "
+            />
+            <mat-error> Name cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Code </mat-label>
+            <input
+              matInput
+              type="text"
+              [readonly]="supplierForm.get('id')?.value"
+              formControlName="code"
+              placeholder="Enter supplier code ... "
+            />
+            <mat-error> Code cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Email </mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="Enter email... "
+            />
+            <mat-error> Email cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Phone Number </mat-label>
+            <input
+              matInput
+              type="tel"
+              formControlName="phoneNumber"
+              maxlength="10"
+              minlength="10"
+              placeholder="Enter Phone number ... "
+              pattern="[0-9]*"
+            />
+            <mat-error
+              *ngIf="supplierForm.get('phoneNumber')?.hasError('required')"
+            >
+              Phone number cannot be Empty.
+            </mat-error>
+            <mat-error
+              *ngIf="supplierForm.get('phoneNumber')?.hasError('pattern')"
+            >
+              Only numbers are allowed.
+            </mat-error>
+            <mat-error
+              *ngIf="supplierForm.get('phoneNumber')?.hasError('minlength')"
+            >
+              You should have 10 characters for phone number.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Account Number </mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="accountNumber"
+              placeholder="Enter Account Number ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Account Holder Name </mat-label>
+            <input
+              matInput
+              formControlName="accountHolderName"
+              placeholder="Enter Account Holder Name ... "
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> ifsc Code </mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="ifscCode"
+              placeholder="Enter ifscCode ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> taxNumber </mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="taxNumber"
+              placeholder="Enter taxNumber ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> licenceNumber </mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="licenceNumber"
+              placeholder="Enter licenceNumber ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Status </mat-label>
+            <mat-select formControlName="status" placeholder="Enter status...">
+              @for(codeValue of statusCodeValue; track codeValue) {
+              <mat-option [value]="codeValue.code">
+                {{ codeValue.value }}
+              </mat-option>
+              }
+            </mat-select>
+            <mat-error> Status cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  }
+  <div style="display: flex; justify-content: right; gap: 12px">
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button
+      mat-raised-button
+      [disabled]="!supplierForm.valid"
+      color="primary"
+      (click)="onSubmit()"
+    >
+      Submit {{ supplierForm.valid }}
+    </button>
+  </div>
+</mat-card>

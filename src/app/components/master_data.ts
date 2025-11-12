@@ -51,6 +51,12 @@ export class MasterData {
     { code: 'A', value: 'Active' },
     { code: 'I', value: 'InActive' },
   ];
+
+
+  static SUPPLIER_STATUS: SimpleCodeValue[] = [
+    { code: 'A', value: 'Active' },
+    { code: 'I', value: 'InActive' },
+  ];
 }
 
 export type SimpleCodeValue = {
