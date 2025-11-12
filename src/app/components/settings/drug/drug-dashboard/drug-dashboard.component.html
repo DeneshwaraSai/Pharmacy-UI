@@ -1,0 +1,59 @@
+
+
+<div class="m-4">
+    <div class="d-flex" style="float:right;">
+<button mat-raised-button (click)="create()" color="primary"> 
+    <mat-icon> add </mat-icon>
+    Create </button>
+
+    </div>
+
+   <br> 
+   <br> 
+<mat-card>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>HSN Code</th>
+        <th>SGST</th>
+        <th>CGST</th>
+        <th>IGST</th>
+        <th>Generic Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of drugSetupList">
+        <td>{{ item.name }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.hsnCode }}</td>
+        <td>{{ item.sgst }}</td>
+        <td>{{ item.cgst }}</td>
+        <td>{{ item.igst }}</td>
+        <td>{{ item.genericName }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <div class="d-flex gap-2">
+            
+              <mat-icon 
+               (click)="edit(item.id)" 
+                style="cursor: pointer; font-size: 20px"
+                color="primary"
+              >
+                edit
+              </mat-icon>
+<mat-icon style="cursor: pointer; font-size: 20px" color="warn">
+                delete
+              </mat-icon>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>
+
+</div>

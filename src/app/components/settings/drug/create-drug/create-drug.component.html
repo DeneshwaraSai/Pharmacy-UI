@@ -1,0 +1,154 @@
+<mat-card class="p-4">
+  <h4 style="text-align: center">DRUG FORM</h4>
+  @if (drugInfoForm) {
+  <form [formGroup]="drugInfoForm">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Drug Name </mat-label>
+            <input
+              matInput
+              type="text"
+              [readonly]="drugInfoForm.get('id')?.value"
+              formControlName="name"
+              placeholder="Enter drug name ... "
+            />
+            <mat-error> Name cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Drug Type </mat-label>
+            <mat-select
+              formControlName="type"
+              placeholder="Enter drug type ..."
+            >
+              @for(codeValue of drugTyoeCodeValue; track codeValue) {
+              <mat-option [value]="codeValue.code">
+                {{ codeValue.value }}
+              </mat-option>
+              }
+            </mat-select>
+            <mat-error> Type cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> units-Per-Pack </mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="unitsPerPack"
+              placeholder="Enter units Per Pack ... "
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> HSN Code </mat-label>
+            <mat-select
+              formControlName="hsnCode"
+              placeholder="Enter hsnCode..."
+            >
+              @for(codeValue of taxCategoryCodeValue; track codeValue) {
+              <mat-option
+                [value]="codeValue.code"
+                (click)="onChangeHSNCode(codeValue)"
+              >
+                {{ codeValue.code }}
+              </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> SGST </mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="sgst"
+              placeholder="Enter sgst ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> CGST </mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="cgst"
+              placeholder="Enter cgst ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> IGST </mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="igst"
+              placeholder="Enter igst ... "
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Generic Name </mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="genericName"
+              placeholder="Enter generic name ... "
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Composition </mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="composition"
+              placeholder="Enter composition ... "
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Status </mat-label>
+            <mat-select formControlName="status" placeholder="Enter status...">
+              @for(codeValue of statusCodeValue; track codeValue) {
+              <mat-option [value]="codeValue.code">
+                {{ codeValue.value }}
+              </mat-option>
+              }
+            </mat-select>
+            <mat-error> Status cannot be Empty.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+  }
+
+  <div style="display: flex; justify-content: right; gap: 12px">
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+  </div>
+</mat-card>

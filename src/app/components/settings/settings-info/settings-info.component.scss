@@ -1,0 +1,57 @@
+.settings-dashboard {
+  padding: 2rem;
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+
+  .dashboard-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #6dd5fa, #2980b9);
+    color: #fff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    // .icon-wrapper {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   font-size: 3rem;
+    //   margin-bottom: 1rem;
+    //   background: rgba(255, 255, 255, 0.2);
+    //   padding: 1rem;
+    //   border-radius: 50%;
+    // }
+
+    .card-content {
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+    }
+
+    .card-footer {
+      text-align: right;
+      font-weight: bold;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+  }
+}

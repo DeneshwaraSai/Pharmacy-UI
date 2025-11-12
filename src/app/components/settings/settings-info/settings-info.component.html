@@ -1,0 +1,22 @@
+<mat-icon>edit </mat-icon>
+
+<div class="settings-dashboard">
+  <div class="card-grid">
+    <div
+      class="dashboard-card"
+      *ngFor="let item of setupInfo"
+      (click)="handlerNavigation(item.path)"
+    >
+      <div class="icon-wrapper">
+        <mat-icon>{{ item.icon }}</mat-icon>
+      </div>
+      <div class="card-content">
+        <h3>{{ item.title }}</h3>
+        <p>Manage your {{ item.title | lowercase }} settings</p>
+      </div>
+      <div class="card-footer">
+        <span>Go →</span>
+      </div>
+    </div>
+  </div>
+</div>
