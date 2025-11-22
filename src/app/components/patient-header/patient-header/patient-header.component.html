@@ -1,39 +1,53 @@
-<div class="patient-header mat-elevation-z2">
-  <div class="patient-info">
-    <div class="info-item">
-      <div class="info-item avatar-item">
-        <div class="avatar-initials">
-          {{ getInitials(patient.firstName, patient.lastName) }}
+<ng-container *ngIf="patient">
+  <div class="patient-header mat-elevation-z2">
+    <div class="patient-info">
+      <div class="info-item">
+        <div class="info-item avatar-item">
+          <div class="avatar-initials">
+            {{ getInitials(patient.firstName, patient.lastName) }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="info-item w-22">
-      <span class="label">Patient Name:</span>
-      <span class="value"> {{ patient.firstName }} {{ patient.lastName }} </span>
-    </div>
-    <div class="info-item">
-      <span class="label">Gender/Age:</span>
-      <span class="value">{{ patient.gender }}/{{ patient.age }}</span>
-    </div>
-    <div class="info-item">
-      <span class="label">DOB:</span>
-      <span class="value">{{ date | date : "MM/dd/yyyy" }}</span>
-    </div>
-    <div class="info-item">
-      <span class="label">Mobile:</span>
-      <span class="value">{{ patient.phoneNumber }}</span>
-    </div>
-    <div class="info-item">
-      <span class="label">UHID:</span>
-      <span class="value">{{ patient.uhid }}</span>
-    </div>
-    <div class="info-item">
-      <span class="label">Order No:</span>
-      <span class="value">{{ patient.orderNumber ? patient.orderNumber : 'NA' }}</span>
-    </div>
-    <div class="info-item">
-      <span class="label">Status:</span>
-      <span class="value">{{ patient.orderStatus ? patient.orderStatus : 'NA' }}</span>
+      <div class="info-item w-22">
+        <span class="label">Patient Name:</span>
+        <span class="value">
+          {{ patient.firstName }} {{ patient.lastName }}
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Gender/Age:</span>
+        <span class="value">{{ patient.gender }}/{{ patient.age }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">DOB:</span>
+        <span class="value">{{ date | date : "MM/dd/yyyy" }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Mobile:</span>
+        <span class="value">{{ patient.phoneNumber }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">UHID:</span>
+        <span class="value">{{ patient.uhid }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Order No:</span>
+        <span class="value">{{
+          patient.orderNumber ? patient.orderNumber : "NA"
+        }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Status:</span>
+        <span class="value">{{
+          patient.orderStatus ? patient.orderStatus : "NA"
+        }}</span>
+      </div>
+
+      <div>
+        <button mat-icon-button color="basic" (click)="clearContext()">
+          <mat-icon> search </mat-icon>
+        </button>
+      </div>
     </div>
   </div>
-</div>   
+</ng-container>

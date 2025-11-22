@@ -1,6 +1,5 @@
 import { PatientHeaderContext } from './patient-header/patient-header.model';
 
-
 export class PatientContext {
   static setPatientHeader(patientHeader: PatientHeaderContext) {
     localStorage.setItem('patientHeader', JSON.stringify(patientHeader));
@@ -12,5 +11,9 @@ export class PatientContext {
       return null; // or return a default object
     }
     return JSON.parse(stored) as PatientHeaderContext;
+  }
+
+  static clearPatientHeader() {
+    localStorage.removeItem('patientHeader');
   }
 }

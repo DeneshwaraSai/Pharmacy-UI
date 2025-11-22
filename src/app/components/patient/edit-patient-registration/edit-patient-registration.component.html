@@ -1,1 +1,187 @@
-<p>edit-patient-registration works!</p>
+<app-patient-header [patient]="patientContextHeader"></app-patient-header>
+
+@if (patientContextHeader) {
+<h4> Update Patient Registration </h4>
+<mat-card class="pt-4">
+  @if (patientForm) {
+  <form [formGroup]="patientForm">
+    <mat-card class="pt-2 m-2">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> First Name </mat-label>
+              <input type="text" matInput formControlName="firstName" />
+              <mat-error> First Name is required </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Middle Name </mat-label>
+              <input type="text" matInput formControlName="middleName" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Last Name </mat-label>
+              <input type="text" matInput formControlName="lastName" />
+              <mat-error> Last Name is required </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Gender </mat-label>
+              <mat-select
+                mat-select
+                placeholder="Gender"
+                formControlName="gender"
+              >
+                @for(codeValue of genderTypeCodeValue; track codeValue) {
+                <mat-option [value]="codeValue.code">
+                  {{ codeValue.value }}
+                </mat-option>
+                }
+              </mat-select>
+              <mat-error> Gender is required </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Mobile Number </mat-label>
+              <input type="number" matInput formControlName="phoneNumber" />
+              <mat-error> Mobile Number is required </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Date of Birth </mat-label>
+              <input
+                matInput
+                [matDatepicker]="datepicker"
+                formControlName="dateOfBirth"
+                placeholder="MM/DD/YYYY"
+                (dateChange)="onDateChange($event)"
+              />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="datepicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datepicker> </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Age </mat-label>
+              <input matInput formControlName="age" readonly="true" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Email </mat-label>
+              <input type="email" matInput formControlName="email" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Blood Type </mat-label>
+              <mat-select
+                mat-select
+                placeholder="Blood Type"
+                formControlName="bloodType"
+              >
+                @for(codeValue of bloodTypeCodeValue; track codeValue) {
+                <mat-option [value]="codeValue.code">
+                  {{ codeValue.value }}
+                </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </mat-card>
+
+    <br />
+    <mat-card class="pt-2 m-2">
+      <div class="container" formGroupName="address">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Line One </mat-label>
+              <input type="text" matInput formControlName="lineOne" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Line Two </mat-label>
+              <input type="text" matInput formControlName="lineTwo" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Line Three </mat-label>
+              <input type="text" matInput formControlName="lineThree" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> City </mat-label>
+              <input type="text" matInput formControlName="city" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> District / Sub-Province </mat-label>
+              <input type="text" matInput formControlName="district" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> State / Province </mat-label>
+              <input type="text" matInput formControlName="state" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Country </mat-label>
+              <input type="text" matInput formControlName="country" />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Postal Code </mat-label>
+              <input type="text" matInput formControlName="postalCode" />
+            </mat-form-field>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+  }
+</mat-card>
+
+<div style="display: flex; float: right">
+  <button mat-raised-button class="m-2" color="basic">Cancel</button>
+  <button class="btn m-2" color="basic">Cancel</button>
+  <button (click)="submit()" mat-raised-button class="m-2" color="primary">
+    Submit
+  </button>
+</div>
+}

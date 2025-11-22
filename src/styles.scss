@@ -2,3 +2,18 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import "ag-grid-community/styles/ag-grid.css"; // optional, only base styles
+@import "ag-grid-community/styles/ag-theme-alpine.css"; // choose your theme
+ 
+.ag-theme-quartz .ag-row {
+//   padding: 5px;
+}
+
+.ag-theme-quartz .ag-cell {
+//   padding: 5px;
+}
+
+.ag-theme-quartz .ag-header-cell-label {
+  font-weight: bold;
+}

@@ -15,4 +15,15 @@ export class PatientService {
       patient
     );
   }
+
+  getPatientById(id: number): Observable<Patient> {
+    return this.http.get<Patient>(Environment.API_URL + `patient/v1/${id}`);
+  }
+
+  updatePatient(patient: Patient): Observable<Patient> {
+    return this.http.put<Patient>(
+      Environment.API_URL + 'patient/v1/update',
+      patient
+    );
+  }
 }

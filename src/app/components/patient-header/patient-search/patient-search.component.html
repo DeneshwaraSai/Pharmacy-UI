@@ -1,0 +1,86 @@
+<ng-container>
+  <ng-container *ngIf="patientSearchForm">
+    <form [formGroup]="patientSearchForm">
+      <mat-card class="pt-2 m-2">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> First Name </mat-label>
+                <input type="text" matInput formControlName="firstName" />
+                <mat-error> First Name is required </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> Middle Name </mat-label>
+                <input type="text" matInput formControlName="middleName" />
+              </mat-form-field>
+            </div>
+
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> Last Name </mat-label>
+                <input type="text" matInput formControlName="lastName" />
+                <mat-error> Last Name is required </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> UHID </mat-label>
+                <input type="number" matInput formControlName="uhid" />
+              </mat-form-field>
+            </div>
+
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> Mobile Number </mat-label>
+                <input type="number" matInput formControlName="phoneNumber" />
+                <mat-error> Mobile Number is required </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> Email </mat-label>
+                <input type="email" matInput formControlName="email" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <div style="display: flex; gap: 4px; float: right">
+        <button mat-raised-button (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <br />
+    <br />
+    <br />
+
+    <mat-card>
+      <div class="ag-theme-alpine">
+        <ag-grid-angular
+          class="ag-theme-alpine"
+          style="height: 250px; width: 100%"
+          [rowData]="patientSearchDetailsList"
+          [columnDefs]="colDefs"
+          [defaultColDef]="defaultColDef"
+          rowSelection="single"
+          theme="legacy"
+          (selectionChanged)="onSelectionChanged($event)"
+        ></ag-grid-angular>
+      </div>
+    </mat-card>
+    <div style="margin: 5px; display: flex; gap: 2px; float: right">
+      <button mat-raised-button (click)="onContinue()" color="primary">
+        Continue
+      </button>
+    </div>
+  </ng-container>
+</ng-container>

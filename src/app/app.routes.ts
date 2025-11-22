@@ -4,6 +4,7 @@ import { EditPatientRegistrationComponent } from './components/patient/edit-pati
 import { NewOrderComponent } from './components/orders/new-order/new-order.component';
 import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
+import { PatientSearchComponent } from './components/patient-header/patient-search/patient-search.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,11 @@ export const routes: Routes = [
   {
     path: 'edit-patient',
     component: EditPatientRegistrationComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path:'patient/search',
+    component: PatientSearchComponent,
     canActivate: [authGuard],
   },
   {

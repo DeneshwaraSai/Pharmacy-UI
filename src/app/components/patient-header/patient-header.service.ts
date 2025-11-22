@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Environment } from '../../../environment';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { PatientHeaderContext } from './patient-header.model';
+import {
+  PatientHeaderContext,
+  PatientSearch,
+  PatientSearchDto,
+} from './patient-header.model';
 import { PatientContext } from '../context.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PatientHeaderService {
   constructor(private http: HttpClient) {}
@@ -14,6 +18,13 @@ export class PatientHeaderService {
   getPatientHeader(uhid: number): Observable<PatientHeaderContext> {
     return this.http.get<PatientHeaderContext>(
       Environment.API_URL + `patient/v1/uhid/${uhid}`
+    );
+  }
+
+  getPatientByAdvancedSearch(patientsearch: PatientSearch): Observable<any> {
+    return this.http.post<PatientSearchDto[]>(
+      Environment.API_URL + 'patient/v1/advancedSearch',
+      patientsearch
     );
   }
 
