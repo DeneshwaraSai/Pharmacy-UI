@@ -1,1 +1,35 @@
 <app-patient-header [patient]="patientContextHeader"></app-patient-header>
+
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline" class="w-100">
+        <input matInput [matDatepicker]="datePicker" placeholder="MM/DD/YYYY" />
+        <mat-hint> MM/DD/YYYY </mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <button mat-raised-button (click)="addItem()">Add new</button>
+    <button mat-raised-button (click)="deleteItem()">Delete</button>
+  <div>
+    <ag-grid-angular
+      #agGrid
+      class="ag-theme-alpine"
+      style="height: 250px; width: 100%"
+      [rowData]="rowData"
+      [columnDefs]="colDefs"
+      theme="legacy"
+      (selectionChanged)="selectionChanged($event)"
+      rowSelection="single"
+    ></ag-grid-angular>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { NewOrderComponent } from './components/orders/new-order/new-order.compo
 import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { PatientSearchComponent } from './components/patient-header/patient-search/patient-search.component';
+import { InventoryComponent } from './components/inventory/inventory.component';
 
 export const routes: Routes = [
   {
@@ -29,13 +30,19 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path:'patient/search',
+    path:':pageType/search',
     component: PatientSearchComponent,
     canActivate: [authGuard],
   },
   {
     path: 'new-order',
     component: NewOrderComponent,
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'inventory',
+    component: InventoryComponent,
     canActivate: [authGuard],
   },
 

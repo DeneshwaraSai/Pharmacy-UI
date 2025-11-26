@@ -1,0 +1,5 @@
+<mat-select placeholder="Select a Drug Name">
+    @for(codeValue of codeValueList; track codeValue.id) {
+        <mat-option (click)="onChange(codeValue)" [value]="codeValue.id"> {{ codeValue.name }}</mat-option>
+    }
+</mat-select>

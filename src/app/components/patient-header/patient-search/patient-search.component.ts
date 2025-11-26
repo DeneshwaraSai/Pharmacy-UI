@@ -18,12 +18,12 @@ import {
 } from '../patient-header.model';
 import { PatientContext } from '../../context.service';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-search',
   standalone: true,
-  imports: [ 
+  imports: [
     MatCardModule,
     MatFormFieldModule,
     FormsModule,
@@ -32,7 +32,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     CommonModule,
     AgGridAngular,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './patient-search.component.html',
   styleUrl: './patient-search.component.scss',
@@ -40,7 +40,7 @@ import { Router } from '@angular/router';
 })
 export class PatientSearchComponent {
   @Input() patient: PatientHeaderContext | null = null;
-  @Input() pageType: string = '';
+  pageType: string | null = '';
   selectedRows: PatientSearchDto[] = [];
   patientSearchDetailsList: PatientSearchDto[] = [
     {
@@ -88,10 +88,15 @@ export class PatientSearchComponent {
   constructor(
     private fb: FormBuilder,
     private patientHeaderService: PatientHeaderService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+    this.route.paramMap.subscribe((res) => {
+      this.pageType = res.get('pageType');
+    });
+
     const patient = PatientContext.getPatientHeader();
- 
+
     if (patient) {
       this.patient = patient;
       this.hasPatientContext.set(true);
@@ -139,7 +144,11 @@ export class PatientSearchComponent {
       this.patientHeaderService
         .getPatientHeaderByUhid(this.selectedRows[0].uhid)
         .subscribe((res) => {
-          this.router.navigateByUrl('edit-patient')
+          if (this.pageType == 'patient') {
+            this.router.navigateByUrl('edit-patient');
+          } else if (this.pageType == 'order') {
+            this.router.navigateByUrl('/new-order');
+          }
         });
     }
   }

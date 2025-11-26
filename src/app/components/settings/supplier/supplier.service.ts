@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Environment } from '../../../../environment';
 import { Observable } from 'rxjs';
 import { Supplier } from './supplier.model';
+import { SimpleCodeValue } from '../../master_data';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,12 @@ export class SupplierService {
     return this.http.put<Supplier>(
       Environment.API_URL + 'supplier/v1/update',
       supplier
+    );
+  }
+
+  getSupplierCodeValue(): Observable<SimpleCodeValue[]> {
+    return this.http.get<SimpleCodeValue[]>(
+      Environment.API_URL + 'supplier/v1/codeValue'
     );
   }
 }
