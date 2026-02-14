@@ -1,104 +1,111 @@
+@if (errorMessage && errorMessage.length > 0) {
+  @for (message of errorMessage; track message){
+      <div class="alert-bar">  {{message}} </div>
+  }
+
+}
+
 @if (inventoryForm) {
-<mat-card style="padding: 12px; margin-bottom: 12px">
-  <form [formGroup]="inventoryForm">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Invoice Date </mat-label>
-            <input
-              matInput
-              [matDatepicker]="datePicker"
-              placeholder="Invoice Date"
-              formControlName="invoiceDate"
-            />
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="datePicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #datePicker></mat-datepicker>
-          </mat-form-field>
+  <mat-card style="padding: 12px; margin-bottom: 12px">
+    <form [formGroup]="inventoryForm">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Invoice Date </mat-label>
+              <input
+                matInput
+                [matDatepicker]="datePicker"
+                placeholder="Invoice Date"
+                formControlName="invoiceDate"
+              />
+              <mat-hint> MM/DD/YYYY </mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="datePicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Supplier </mat-label>
+              <mat-select placeholder="Supplier" formControlName="supplierCode">
+                @for (codeValue of supplierCodeList; track codeValue.code) {
+                  <mat-option [value]="codeValue.code">
+                    {{ codeValue.value }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Invoice number </mat-label>
+              <input
+                matInput
+                placeholder="Invoice number"
+                formControlName="invoiceNumber"
+              />
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Supplier </mat-label>
-            <mat-select placeholder="Supplier" formControlName="supplierCode">
-              @for(codeValue of supplierCodeList; track codeValue.code){
-              <mat-option [value]="codeValue.code">
-                {{ codeValue.value }}
-              </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Invoice Amount </mat-label>
+              <input
+                matInput
+                placeholder="Invoice Amount"
+                formControlName="invoiceAmount"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Discount Perc </mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Discount Perc"
+                formControlName="discountAmount"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Discount Amount </mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Discount Amount"
+                formControlName="discountPerc"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Net Amount </mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Net Amount"
+                formControlName="netAmount"
+              />
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Invoice number </mat-label>
-            <input
-              matInput
-              placeholder="Invoice number"
-              formControlName="invoiceNumber"
-            />
-          </mat-form-field>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> Notes </mat-label>
+              <input matInput placeholder="Notes" />
+            </mat-form-field>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Invoice Amount </mat-label>
-            <input
-              matInput
-              placeholder="Invoice Amount"
-              formControlName="invoiceAmount"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Discount Perc </mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Discount Perc"
-              formControlName="discountAmount"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Discount Amount </mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Discount Amount"
-              formControlName="discountPerc"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Net Amount </mat-label>
-            <input
-              matInput
-              type="number"
-              placeholder="Net Amount"
-              formControlName="netAmount"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Notes </mat-label>
-            <input matInput placeholder="Notes" />
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-  </form>
-</mat-card>
+    </form>
+  </mat-card>
 }
 
 <mat-card style="padding: 12px; margin-bottom: 12px">
@@ -113,10 +120,10 @@
         />
         <mat-autocomplete #auto>
           @for (codeValue of drugList; track codeValue.id) {
-          <mat-option (click)="onAutoCompleteSelect(codeValue)">
-            {{ codeValue.name }} - {{ codeValue.type }} -
-            {{ codeValue.hsnCode }}</mat-option
-          >
+            <mat-option (click)="onAutoCompleteSelect(codeValue)">
+              {{ codeValue.name }} - {{ codeValue.type }} -
+              {{ codeValue.hsnCode }}</mat-option
+            >
           }
         </mat-autocomplete>
       </mat-form-field>
@@ -150,8 +157,6 @@
     ></ag-grid-angular>
   </div>
 </mat-card>
-
- 
 
 <div style="float: right">
   <button mat-raised-button (click)="submitOrder()">Submit</button>

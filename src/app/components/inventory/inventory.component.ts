@@ -12,7 +12,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AgGridAngular } from 'ag-grid-angular';
-import { defaultInventoryDetails, InventoryDetails } from './inventory.model';
+import {
+  defaultInventoryDetails,
+  Inventory,
+  InventoryDetails,
+} from './inventory.model';
 import { Router } from '@angular/router';
 import { SupplierService } from '../settings/supplier/supplier.service';
 import { DrugService } from '../settings/drug/drug.service';
@@ -23,6 +27,7 @@ import { DrugSetup } from '../settings/drug/drug.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { InventoryService } from './inventory.service';
 @Component({
   selector: 'app-inventory',
   standalone: true,
@@ -42,7 +47,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   ],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.scss',
-  providers: [SupplierService, DrugService],
+  providers: [SupplierService, DrugService, InventoryService],
 })
 export class InventoryComponent {
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
@@ -52,11 +57,14 @@ export class InventoryComponent {
   drugList: DrugSetup[] = [];
 
   inventoryForm!: FormGroup;
+  errorMessage: string[] = [];
+
   constructor(
     private router: Router,
     private supplierService: SupplierService,
     private drugService: DrugService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private inventoryService: InventoryService,
   ) {
     this.inventoryForm = this.fb.group({
       invoiceDate: [new Date(), [Validators.required]],
@@ -135,7 +143,9 @@ export class InventoryComponent {
       },
     },
     { field: 'totalManufacturerRate' },
-    { field: 'netAmount' },
+    { headerName: 'Invoice Amount with Discounts', field: 'invoiceAmount' },
+    { headerName: 'Net Amount with taxes', field: 'netAmount' },
+
     {
       field: 'sellingCost',
       editable: true,
@@ -152,18 +162,47 @@ export class InventoryComponent {
   ];
 
   updateParams(data: InventoryDetails) {
-    const cgst = 0,
-      sgst = 0;
-    data.totalManufacturerRate = data.quantity * data.manufacturerRate;
-    data.netAmount = data.quantity * data.manufacturerRate + (cgst + sgst);
-    data.totalSellingCost = data.quantity * data.sellingCost;
+    const cgst: number = data.cgst || 0.0,
+      sgst: number = data.sgst || 0.0;
+    data.totalManufacturerRate = Number(
+      parseFloat(String(data.quantity * data.manufacturerRate)).toFixed(2),
+    );
+    const cgstAmount = (data.totalManufacturerRate * cgst) / 100;
+    const sgstAmount = (data.totalManufacturerRate * sgst) / 100;
+
+    data.netAmount = Number(
+      parseFloat(
+        String(
+          data.quantity * data.manufacturerRate + (cgstAmount + sgstAmount),
+        ),
+      ).toFixed(2),
+    );
+    // TODO : Add Discounts here
+
+    data.invoiceAmount = Number(
+      parseFloat(
+        String(
+          data.quantity * data.manufacturerRate + (cgstAmount + sgstAmount),
+        ),
+      ).toFixed(2),
+    );
+    data.totalSellingCost = Number(
+      parseFloat(String(data.quantity * data.sellingCost)).toFixed(2),
+    );
+
+    this.inventoryForm.controls['netAmount'].setValue(
+      this.rowData.reduce((sum, row) => sum + (row.netAmount || 0), 0),
+    );
+    this.inventoryForm.controls['invoiceAmount'].setValue(
+      this.rowData.reduce((sum, row) => sum + (row.invoiceAmount || 0), 0),
+    );
+
     return data;
   }
 
-  addItem(newRow:any) {
-    if (!newRow)
-      newRow = structuredClone(defaultInventoryDetails);
-    
+  addItem(newRow: any) {
+    if (!newRow) newRow = structuredClone(defaultInventoryDetails);
+
     this.rowData.push(newRow);
 
     if (this.agGrid?.api) {
@@ -214,10 +253,64 @@ export class InventoryComponent {
       totalSellingCost: 0.0,
     };
     this.addItem(newRow);
-    console.log(this.rowData)
+    console.log(this.rowData);
+  }
+
+  validateInventory() {
+    this.errorMessage = []; // reset errors
+
+    const inventory: Inventory = this.inventoryForm.value;
+    inventory.inventoryDetails = this.rowData;
+
+    if (
+      !inventory.inventoryDetails ||
+      inventory.inventoryDetails.length === 0
+    ) {
+      this.errorMessage.push('At least one Inventory Detail is required.');
+      return false;
+    }
+
+    // Required field validations
+    if (!inventory.supplierCode?.trim()) {
+      this.errorMessage.push('Supplier Code is required.');
+    }
+
+    if (!inventory.invoiceNumber?.trim()) {
+      this.errorMessage.push('Invoice Number is required.');
+    }
+
+    if (!inventory.invoiceDate) {
+      this.errorMessage.push('Invoice Date is required.');
+    }
+
+    // Amount validations
+    if (inventory.discountPerc && inventory.discountPerc < 0) {
+      this.errorMessage.push('Discount % cannot be negative.');
+    }
+
+    if (inventory.discountAmt && inventory.discountAmt < 0) {
+      this.errorMessage.push('Discount Amount cannot be negative.');
+    }
+
+    if (inventory.invoiceAmt && inventory.invoiceAmt <= 0) {
+      this.errorMessage.push('Invoice Amount must be greater than 0.');
+    }
+
+    console.log(inventory);
+    console.log(this.errorMessage);
+
+    return this.errorMessage.length === 0;
   }
 
   submitOrder() {
-    console.log(this.rowData);
+    const inventory: Inventory = this.inventoryForm.value;
+    inventory.inventoryDetails = this.rowData;
+    console.log(inventory);
+
+    if (this.validateInventory())
+      this.inventoryService.createInventory(inventory).subscribe(
+        (res) => {},
+        (error: Error) => {},
+      );
   }
 }
